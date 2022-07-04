@@ -109,9 +109,13 @@
             <img src="assets/images/floating-image-3.png" class="floating-image-3" alt="">
 
             <div class="overflow-text">
+                <h6>
+                    Building a lasting legacy
+                    for individuals, families and businesses globally
+                </h6>
                 <h1 class="fat-text">Business</h1>
             </div>
-            <div class="banner-text-container container">
+            <div class="banner-text-container container d-none d-md-block">
                 <div class="banner-text-block">
                     <h6>
                         Building a lasting legacy
@@ -509,7 +513,7 @@
 
                     .fromTo('.floating-image-2', {
                         y: 100, x: 0
-                    }, { y: -200, x: 0 })
+                    }, { y: -150, x: 0 })
 
 
 
@@ -525,6 +529,19 @@
                         y: 0
                     }, { y: 100 })
 
+                gsap.set('.section-2 .overflow-text h6', { xPercent: -50 });
+                gsap.timeline({
+                    scrollTrigger: {
+                        trigger: "#wrap",
+                        pin: true,
+                        scrub: 0.2,
+                        start: 'top top',
+                        end: '+=10000',
+                    }
+                })
+                    .fromTo('.section-2 .overflow-text h6', {
+                        x: 50
+                    }, { x: 1200 })
 
             },
 

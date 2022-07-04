@@ -149,7 +149,7 @@ header .navbar .navbar-nav .nav-item .search-icon-effect::after {
   z-index: -1;
 }
 
-header .navbar .navbar-nav .nav-item .nav-link {
+.nav-link {
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -159,9 +159,13 @@ header .navbar .navbar-nav .nav-item .nav-link {
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
+  -webkit-transition: 300ms;
+  transition: 300ms;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 
-header .navbar .navbar-nav .nav-item .nav-link::before {
+.nav-link::before {
   -webkit-transition: 300ms;
   transition: 300ms;
   height: 2px;
@@ -177,7 +181,13 @@ header .navbar .navbar-nav .nav-item .nav-link::before {
   width: 70%;
 }
 
-header .navbar .navbar-nav .nav-item .nav-link:hover::before {
+.nav-link:hover {
+  color: #ffffff;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.nav-link:hover::before {
   bottom: -2px;
   opacity: 1;
 }
@@ -276,10 +286,19 @@ header .navbar .navbar-nav .nav-item .nav-link:hover::before {
     width: 100%;
     overflow: hidden;
     position: absolute;
-    top: 50%;
+    top: 40%;
     -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
     z-index: -1;
+  }
+  .section-2 .overflow-text h6 {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5em;
+    line-height: 45px;
+    text-transform: capitalize;
+    color: #000000;
   }
 }
 
@@ -418,7 +437,7 @@ header .navbar .navbar-nav .nav-item .nav-link:hover::before {
   z-index: 1;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (min-width: 992px) {
   .section-3 {
     margin-right: -5px;
   }

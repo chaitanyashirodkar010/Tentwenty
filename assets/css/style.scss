@@ -123,38 +123,43 @@ header {
                         z-index: -1;
                     }
                 }
-
-                .nav-link {
-                    font-family: "Poppins", sans-serif;
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 0.9em;
-                    line-height: 19px;
-                    color: #ffffff;
-                    padding-left: 15px;
-                    padding-right: 15px;
-                    position: relative;
-                    &::before {
-                        transition: 300ms;
-                        height: 2px;
-                        content: "";
-                        position: absolute;
-                        background-color: #ffffff;
-                        width: 100%;
-                        bottom: -8px;
-                        opacity: 0;
-                        left: 0;
-                        right: 0;
-                        margin: auto;
-                        width: 70%;
-                    }
-
-                    &:hover::before {
-                        bottom: -2px;
-                        opacity: 1;
-                    }
-                }
             }
+        }
+    }
+}
+.nav-link {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.9em;
+    line-height: 19px;
+    color: #ffffff;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    transition: 300ms;
+    transform: scale(0.9);
+    &::before {
+        transition: 300ms;
+        height: 2px;
+        content: "";
+        position: absolute;
+        background-color: #ffffff;
+        width: 100%;
+        bottom: -8px;
+        opacity: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 70%;
+    }
+
+    &:hover {
+        color: #ffffff;
+        transform: scale(1);
+        &::before {
+            bottom: -2px;
+            opacity: 1;
         }
     }
 }
@@ -244,9 +249,19 @@ header {
             width: 100%;
             overflow: hidden;
             position: absolute;
-            top: 50%;
+            top: 40%;
             transform: translateY(-50%);
             z-index: -1;
+            h6 {
+                font-family: "Poppins", sans-serif;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 1.5em;
+                line-height: 45px;
+                text-transform: capitalize;
+
+                color: #000000;
+            }
         }
     }
 
@@ -348,7 +363,7 @@ header {
     color: white;
     position: relative;
     z-index: 1;
-    @media screen and (max-width: 992px) {
+    @media screen and (min-width: 992px) {
         margin-right: -5px;
     }
     .section-image {
