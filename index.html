@@ -175,385 +175,359 @@
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
+        if (window.innerWidth > 737) {
+            const tl = gsap.timeline();
+            //// ***** onpage load first banner animation
+            tl.from(".banner", .5, { y: -900, delay: .5, opacity: 0, ease: "circ.out" });
+            tl.fromTo(".banner-overlay", .5, { width: "0%" }, { width: "100%" });
+            tl.from(".banner-image", .5, { x: 1500, delay: 0, ease: "back.out" });
+            tl.from(".navbar", .2, {
+                y: 100,
+                ease: "power4.out",
+                delay: 0.5,
+                opacity: 0,
+                stagger: {
+                    amount: 0.3
+                }
+            });
+            tl.from(".nav-item", .5, {
+                scale: 0,
+                ease: "power4.out",
+                delay: 0.5,
+                opacity: 0,
+                stagger: {
+                    amount: 0.5
+                }
+            });
+            tl.from(".banner-description", .5, { x: -100, delay: 0, opacity: 0, ease: "back.out" });
+            tl.from(".line .line-span", .5, {
+                y: 100,
+                ease: "power4.out",
+                delay: 0.5,
+                opacity: 0,
+                stagger: {
+                    amount: 0.3
+                }
+            });
 
 
-        ScrollTrigger.saveStyles(".mobile, .desktop");
 
-        /*** Different ScrollTrigger setups for various screen sizes (media queries) ***/
-        ScrollTrigger.matchMedia({
+            // ********** ScrollTrigger
 
+            gsap.registerPlugin(ScrollTrigger);
 
-            "(min-width: 800px)": function () {
+            const sections = gsap.utils.toArray("section");
+            let maxWidth = 0;
 
-
-                const tl = gsap.timeline();
-                //// ***** onpage load first banner animation
-                tl.from(".banner", .5, { y: -900, delay: .5, opacity: 0, ease: "circ.out" });
-                tl.fromTo(".banner-overlay", .5, { width: "0%" }, { width: "100%" });
-                tl.from(".banner-image", .5, { x: 1500, delay: 0, ease: "back.out" });
-                tl.from(".navbar", .2, {
-                    y: 100,
-                    ease: "power4.out",
-                    delay: 0.5,
-                    opacity: 0,
-                    stagger: {
-                        amount: 0.3
-                    }
+            const getMaxWidth = () => {
+                maxWidth = 0;
+                sections.forEach((section) => {
+                    maxWidth += section.offsetWidth;
                 });
-                tl.from(".nav-item", .5, {
-                    scale: 0,
-                    ease: "power4.out",
-                    delay: 0.5,
-                    opacity: 0,
-                    stagger: {
-                        amount: 0.5
-                    }
+            };
+            getMaxWidth();
+            ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
+
+            gsap.to(sections, {
+                x: () => `-${maxWidth - window.innerWidth}`,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".banner-container",
+                    pin: true,
+                    scrub: true,
+                    end: () => `+=${maxWidth}`,
+                    invalidateOnRefresh: true,
+                    marker: true
+                }
+            });
+
+            sections.forEach((sct, i) => {
+                ScrollTrigger.create({
+                    trigger: sct,
+                    start: () => 'top top-=' + (sct.offsetLeft - window.innerWidth / 2) * (maxWidth / (maxWidth - window.innerWidth)),
+                    end: () => '+=' + sct.offsetWidth * (maxWidth / (maxWidth - window.innerWidth)),
+                    toggleClass: { targets: sct, className: "active" }
                 });
-                tl.from(".banner-description", .5, { x: -100, delay: 0, opacity: 0, ease: "back.out" });
-                tl.from(".line .line-span", .5, {
-                    y: 100,
-                    ease: "power4.out",
-                    delay: 0.5,
-                    opacity: 0,
-                    stagger: {
-                        amount: 0.3
-                    }
-                });
+            });
+
+            //// ***** banner 2 floating images
+
+            gsap.set('.floating-image', { xPercent: -50 });
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2,
+                }
+            })
+                .from('.floating-image', {
+                    x: 280,
+                    scale: 0.7
+                })
+                .to('.floating-image', {
+                    x: 100,
+                    scale: 1
+
+                })
 
 
 
-                // ********** ScrollTrigger
+            //// ***** section 2 floating image 2
 
-                gsap.registerPlugin(ScrollTrigger);
 
-                const sections = gsap.utils.toArray("section");
-                let maxWidth = 0;
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2
+                }
+            })
 
-                const getMaxWidth = () => {
-                    maxWidth = 0;
-                    sections.forEach((section) => {
-                        maxWidth += section.offsetWidth;
-                    });
-                };
-                getMaxWidth();
-                ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
+                .fromTo('.floating-image-2', {
+                    x: 100
+                }, { x: -300 })
 
-                gsap.to(sections, {
-                    x: () => `-${maxWidth - window.innerWidth}`,
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: ".banner-container",
-                        pin: true,
-                        scrub: true,
-                        end: () => `+=${maxWidth}`,
-                        invalidateOnRefresh: true,
-                        marker: true
-                    }
-                });
+            //// ***** section 2 floating image 3
 
-                sections.forEach((sct, i) => {
-                    ScrollTrigger.create({
-                        trigger: sct,
-                        start: () => 'top top-=' + (sct.offsetLeft - window.innerWidth / 2) * (maxWidth / (maxWidth - window.innerWidth)),
-                        end: () => '+=' + sct.offsetWidth * (maxWidth / (maxWidth - window.innerWidth)),
-                        toggleClass: { targets: sct, className: "active" }
-                    });
-                });
 
-                //// ***** banner 2 floating images
+            gsap.set('.floating-image-3', { xPercent: -50 });
 
-                gsap.set('.floating-image', { xPercent: -50 });
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2
+                }
+            })
 
-                gsap.timeline({
+                .fromTo('.floating-image-3', {
+                    y: -200
+                }, { y: 250 })
+
+            //// ***** section 2 text
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2,
+                    start: 'top top',
+                    end: '+=10000',
+                }
+            })
+                .fromTo('.section-2 .banner-text-block h6', {
+                    x: 50
+                }, { x: 1200 })
+
+            //// ***** section 2 text h1 fat text
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2
+                }
+            })
+                .fromTo('.fat-text', {
+                    x: -20
+                }, { x: 630 })
+
+            //// ***** section-3 image
+
+
+            gsap.set('.section-3 img', { xPercent: -50 });
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 1,
+                    start: 'top top',
+                    end: '+=10000'
+                }
+            })
+                .fromTo('.section-3 img', {
+                    x: 0
+                }, { x: 350 })
+
+            //// ***** section-4 texts
+
+            gsap.set('.line1', { xPercent: -50 });
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2,
+                    start: 'top top',
+                    end: '+=10000',
+                    duration: 1
+                }
+            })
+                .fromTo('.line1', {
+                    x: 0
+                }, { x: 1200 })
+
+            //// ***** section-4 texts
+
+            gsap.set('.line2', { xPercent: -50 });
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2,
+                    start: 'top top',
+                    end: '+=10000',
+                    duration: 1
+                }
+            })
+                .fromTo('.line2', {
+                    x: 2000
+                }, { x: 0 })
+
+            //// ***** section-4 image
+
+            gsap.set('.banner-4-image', { xPercent: 0 });
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2,
+                    end: '+=10000',
+                    duration: 1
+                }
+            })
+                .fromTo('.banner-4-image', {
+                    rotation: -45,
+                }, { rotation: 30 })
+
+
+            //// ***** section-4 text 
+
+
+            gsap.utils.toArray(".line-translate").forEach((title, index) => {
+
+
+                const tl = gsap.timeline({
                     scrollTrigger: {
                         trigger: "#wrap",
                         pin: true,
                         scrub: 0.2,
                     }
-                })
-                    .from('.floating-image', {
-                        x: 280,
-                        scale: 0.7
-                    })
-                    .to('.floating-image', {
-                        x: 100,
-                        scale: 1
-
-                    })
-
-
-
-                //// ***** section 2 floating image 2
-
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2
-                    }
-                })
-
-                    .fromTo('.floating-image-2', {
-                        x: 100
-                    }, { x: -300 })
-
-                //// ***** section 2 floating image 3
-
-
-                gsap.set('.floating-image-3', { xPercent: -50 });
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2
-                    }
-                })
-
-                    .fromTo('.floating-image-3', {
-                        y: -200
-                    }, { y: 250 })
-
-                //// ***** section 2 text
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2,
-                        start: 'top top',
-                        end: '+=10000',
-                    }
-                })
-                    .fromTo('.section-2 .banner-text-block h6', {
-                        x: 50
-                    }, { x: 1200 })
-
-                //// ***** section 2 text h1 fat text
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2
-                    }
-                })
-                    .fromTo('.fat-text', {
-                        x: -20
-                    }, { x: 630 })
-
-                //// ***** section-3 image
-
-
-                gsap.set('.section-3 img', { xPercent: -50 });
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 1,
-                        start: 'top top',
-                        end: '+=10000'
-                    }
-                })
-                    .fromTo('.section-3 img', {
-                        x: 0
-                    }, { x: 350 })
-
-                //// ***** section-4 texts
-
-                gsap.set('.line1', { xPercent: -50 });
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2,
-                        start: 'top top',
-                        end: '+=10000',
-                        duration: 1
-                    }
-                })
-                    .fromTo('.line1', {
-                        x: 0
-                    }, { x: 1200 })
-
-                //// ***** section-4 texts
-
-                gsap.set('.line2', { xPercent: -50 });
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2,
-                        start: 'top top',
-                        end: '+=10000',
-                        duration: 1
-                    }
-                })
-                    .fromTo('.line2', {
-                        x: 2000
-                    }, { x: 0 })
-
-                //// ***** section-4 image
-
-                gsap.set('.banner-4-image', { xPercent: 0 });
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2,
-                        end: '+=10000',
-                        duration: 1
-                    }
-                })
-                    .fromTo('.banner-4-image', {
-                        rotation: -45,
-                    }, { rotation: 30 })
-
-
-                //// ***** section-4 text 
-
-
-                gsap.utils.toArray(".line-translate").forEach((title, index) => {
-
-
-                    const tl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: "#wrap",
-                            pin: true,
-                            scrub: 0.2,
-                        }
-                    });
-                    tl
-                        .fromTo(title, {
-                            x: 0,
-                        }, {
-                            x: 900, stagger: {
-                                amount: 0.3
-                            }
-                        })
-
-
                 });
-
-                //// ***** section-4 links
-
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        delay: 1,
-                        scrub: 0.2
-                    }
-                })
-                    .from('.top-text-navlink .nav-item', {
-                        scale: 0,
-                        opacity: 0,
-                        delay: 1,
-                        stagger: {
-                            amount: 0.3
-                        }
-                    })
-                    .to('.top-text-navlink .nav-item', {
-                        scale: 1,
-                        opacity: 1,
-                        stagger: {
-                            amount: 0.3
-                        }
-                    })
-
-                //// ***** section-4 background
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        delay: 2,
-                        scrub: 0.2
-                    }
-                })
-                    .fromTo('.banner-pattern', {
-                        rotation: -180, scale: 0
-                    }, { rotation: 0, scale: 1 })
-
-
-            },
-
-
-            "(max-width: 799px)": function () {
-
-
-                gsap.set('.floating-image', { xPercent: -50 });
-
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2,
-                    }
-                })
-                    .from('.floating-image', {
-                        x: 100,
-                        scale: 0.7
-                    })
-                    .to('.floating-image', {
+                tl
+                    .fromTo(title, {
                         x: 0,
-                        scale: 1
-
+                    }, {
+                        x: 900, stagger: {
+                            amount: 0.3
+                        }
                     })
 
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2
+
+            });
+
+            //// ***** section-4 links
+
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    delay: 1,
+                    scrub: 0.2
+                }
+            })
+                .from('.top-text-navlink .nav-item', {
+                    scale: 0,
+                    opacity: 0,
+                    delay: 1,
+                    stagger: {
+                        amount: 0.3
+                    }
+                })
+                .to('.top-text-navlink .nav-item', {
+                    scale: 1,
+                    opacity: 1,
+                    stagger: {
+                        amount: 0.3
                     }
                 })
 
-                    .fromTo('.floating-image-2', {
-                        y: 100, x: 0
-                    }, { y: -150, x: 0 })
+            //// ***** section-4 background
 
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    delay: 2,
+                    scrub: 0.2
+                }
+            })
+                .fromTo('.banner-pattern', {
+                    rotation: -180, scale: 0
+                }, { rotation: 0, scale: 1 })
+        }
 
+        else {
+            gsap.set('.floating-image', { xPercent: -50 });
 
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2
-                    }
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2,
+                }
+            })
+                .from('.floating-image', {
+                    x: 100,
+                    scale: 0.7
+                })
+                .to('.floating-image', {
+                    x: 0,
+                    scale: 1
+
                 })
 
-                    .fromTo('.floating-image-3', {
-                        y: 0
-                    }, { y: 100 })
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2
+                }
+            })
 
-                gsap.set('.section-2 .overflow-text h6', { xPercent: -50 });
-                gsap.timeline({
-                    scrollTrigger: {
-                        trigger: "#wrap",
-                        pin: true,
-                        scrub: 0.2,
-                        start: 'top top',
-                        end: '+=10000',
-                    }
-                })
-                    .fromTo('.section-2 .overflow-text h6', {
-                        x: 50
-                    }, { x: 1200 })
-
-            },
+                .fromTo('.floating-image-2', {
+                    y: 100, x: 0
+                }, { y: -150, x: 0 })
 
 
-            "all": function () {
 
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2
+                }
+            })
 
-            }
+                .fromTo('.floating-image-3', {
+                    y: 0
+                }, { y: 100 })
 
-        });
-
-
+            gsap.set('.section-2 .overflow-text h6', { xPercent: -50 });
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#wrap",
+                    pin: true,
+                    scrub: 0.2,
+                    start: 'top top',
+                    end: '+=10000',
+                }
+            })
+                .fromTo('.section-2 .overflow-text h6', {
+                    x: 50
+                }, { x: 1200 })
+        }
 
     </script>
     <script>
